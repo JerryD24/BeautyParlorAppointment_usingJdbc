@@ -6,7 +6,6 @@ import static beautyPackage.DatabaseConnector.*;
 
 public class Main {
 
-
     public static void main(String[] args) throws SQLException {
         System.out.println("Started");
 
@@ -23,6 +22,7 @@ public class Main {
 
     private void run(Connection connection) throws SQLException {
         Scanner scanner = new Scanner(System.in);
+        Main main=new Main();
 
         while (true) {
             System.out.println("---------------------------------------------------------------------------------------");
@@ -48,49 +48,49 @@ public class Main {
             int choice = Integer.parseInt(scanner.nextLine());
             switch (choice) {
                 case 1:
-                    Main.registerCustomer(connection, scanner);
+                    main.registerCustomer(connection, scanner);
                     break;
                 case 2:
-                    Main.modifyCustomer(connection, scanner);
+                    main.modifyCustomer(connection, scanner);
                     break;
                 case 3:
-                    Main.deleteCustomer(connection, scanner);
+                    main.deleteCustomer(connection, scanner);
                     break;
                 case 4:
-                    Main.addBeautician(connection, scanner);
+                    main.addBeautician(connection, scanner);
                     break;
                 case 5:
-                    Main.modifyBeautician(connection, scanner);
+                    main.modifyBeautician(connection, scanner);
                     break;
                 case 6:
-                    Main.deleteBeautician(connection, scanner);
+                    main.deleteBeautician(connection, scanner);
                     break;
                 case 7:
-                    Main.viewBeauticians(connection, scanner);
+                    main.viewBeauticians(connection, scanner);
                     break;
                 case 8:
-                    Main.addService(connection, scanner);
+                    main.addService(connection, scanner);
                     break;
                 case 9:
-                    Main.modifyService(connection, scanner);
+                    main.modifyService(connection, scanner);
                     break;
                 case 10:
-                    Main.deleteService(connection, scanner);
+                    main.deleteService(connection, scanner);
                     break;
                 case 11:
-                    Main.viewServices(connection, scanner);
+                    main.viewServices(connection, scanner);
                     break;
                 case 12:
-                    Main.bookAppointment(connection, scanner);
+                    main.bookAppointment(connection, scanner);
                     break;
                 case 13:
-                    Main.modifyAppointment(connection, scanner);
+                    main.modifyAppointment(connection, scanner);
                     break;
                 case 14:
-                    Main.viewAppointmentHistory(connection, scanner);
+                    main.viewAppointmentHistory(connection, scanner);
                     break;
                 case 15:
-                    Main.cancelAppointment(connection, scanner);
+                    main.cancelAppointment(connection, scanner);
                     break;
                 case 0:
                     System.out.println("Exiting...");
@@ -101,7 +101,7 @@ public class Main {
         }
     }
 
-    private static void registerCustomer(Connection connection, Scanner scanner) throws SQLException {
+    public void registerCustomer(Connection connection, Scanner scanner) throws SQLException {
         System.out.println("Please enter your name:");
         String name = scanner.nextLine();
 
@@ -141,7 +141,7 @@ public class Main {
         System.out.println();
     }
 
-    private static void viewAppointmentHistory(Connection connection, Scanner scanner) throws SQLException {
+    public void viewAppointmentHistory(Connection connection, Scanner scanner) throws SQLException {
         System.out.println("Enter Booking Appointment");
         String sql = "SELECT * FROM appointments WHERE id = ?";
         int tak = Integer.parseInt(scanner.nextLine());
@@ -167,7 +167,7 @@ public class Main {
         System.out.println();
     }
 
-    private static void bookAppointment(Connection connection, Scanner scanner) {
+    public void bookAppointment(Connection connection, Scanner scanner) {
         System.out.println("Please select a beautician:");
         viewBeauticians(connection, scanner);
 
@@ -212,7 +212,7 @@ public class Main {
     }
 
 
-    private static void viewBeauticians(Connection connection, Scanner scanner) {
+    public void viewBeauticians(Connection connection, Scanner scanner) {
         try {
             String sql = "SELECT * FROM beauticians";
             ResultSet results = connection.createStatement().executeQuery(sql);
@@ -230,7 +230,7 @@ public class Main {
         System.out.println();
     }
 
-    private static void viewServices(Connection connection, Scanner scanner) {
+    public void viewServices(Connection connection, Scanner scanner) {
         try {
             String sql = "SELECT * FROM services";
             ResultSet results = connection.createStatement().executeQuery(sql);
@@ -248,7 +248,7 @@ public class Main {
         System.out.println();
     }
 
-    private static void modifyAppointment(Connection connection, Scanner scanner) throws SQLException {
+    public void modifyAppointment(Connection connection, Scanner scanner) throws SQLException {
         System.out.println("Please enter the id of the appointment you want to modify:");
         int id = Integer.parseInt(scanner.nextLine());
 
@@ -282,7 +282,7 @@ public class Main {
     }
 
 
-    private static void cancelAppointment(Connection connection, Scanner scanner) throws SQLException {
+    public void cancelAppointment(Connection connection, Scanner scanner) throws SQLException {
         System.out.println("Enter Appointment ID:");
 
         int id = Integer.parseInt(scanner.nextLine());
@@ -297,7 +297,7 @@ public class Main {
         System.out.println();
     }
 
-    private static void modifyCustomer(Connection connection, Scanner scanner) throws SQLException {
+    public void modifyCustomer(Connection connection, Scanner scanner) throws SQLException {
         System.out.println("Please enter the ID of the customer you want to modify:");
         int customerId = Integer.parseInt(scanner.nextLine());
 
@@ -338,7 +338,7 @@ public class Main {
         System.out.println();
     }
 
-    private static void deleteCustomer(Connection connection, Scanner scanner) throws SQLException {
+    public void deleteCustomer(Connection connection, Scanner scanner) throws SQLException {
         System.out.println("Enter Customer ID to delete:");
         int customerId = Integer.parseInt(scanner.nextLine());
 
@@ -364,7 +364,7 @@ public class Main {
         }
     }
 
-    private static void addBeautician(Connection connection, Scanner scanner) throws SQLException {
+    public void addBeautician(Connection connection, Scanner scanner) throws SQLException {
         System.out.println("Please enter the ID of the beautician:");
         int id = Integer.parseInt(scanner.nextLine());
 
@@ -389,7 +389,7 @@ public class Main {
         System.out.println();
     }
 
-    private static void deleteBeautician(Connection connection, Scanner scanner) throws SQLException {
+    public void deleteBeautician(Connection connection, Scanner scanner) throws SQLException {
         System.out.println("Please enter the ID of the beautician to delete:");
         int id = Integer.parseInt(scanner.nextLine());
 
@@ -407,7 +407,7 @@ public class Main {
         System.err.println();
     }
 
-    private static void modifyBeautician(Connection connection, Scanner scanner) throws SQLException {
+    public void modifyBeautician(Connection connection, Scanner scanner) throws SQLException {
         System.out.println("Please enter the ID of the beautician you want to modify:");
         int id = Integer.parseInt(scanner.nextLine());
 
@@ -440,7 +440,7 @@ public class Main {
         System.out.println();
     }
 
-    private static void addService(Connection connection, Scanner scanner) throws SQLException {
+    public void addService(Connection connection, Scanner scanner) throws SQLException {
         System.out.println("Please enter the service details:");
 
         System.out.println("Enter Service ID (manually assigned):");
@@ -467,7 +467,7 @@ public class Main {
         System.out.println();
     }
 
-    private static void modifyService(Connection connection, Scanner scanner) throws SQLException {
+    public void modifyService(Connection connection, Scanner scanner) throws SQLException {
         System.out.println("Please enter the ID of the service you want to modify:");
         int serviceId = Integer.parseInt(scanner.nextLine());
 
@@ -501,7 +501,7 @@ public class Main {
         System.out.println();
     }
 
-    private static void deleteService(Connection connection, Scanner scanner) throws SQLException {
+    public void deleteService(Connection connection, Scanner scanner) throws SQLException {
         System.out.println("Enter Service ID to delete:");
         int serviceId = Integer.parseInt(scanner.nextLine());
 
