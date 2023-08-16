@@ -84,21 +84,35 @@ public class Main {
         String address = scanner.nextLine();
 
         try (Connection customerConnection = DriverManager.getConnection(CONNECTION_STRING, USERNAME, PASSWORD);
-             PreparedStatement statement = customerConnection.prepareStatement("INSERT INTO customers (name, email, phone, address) VALUES (?, ?, ?, ?)")
+             PreparedStatement statement = customerConnection.prepareStatement("INSERT INTO customers (name, email, phone, address) VALUES (?, ?, ?, ?)",
+            		 Statement.RETURN_GENERATED_KEYS)
         ) {
             statement.setString(1, name);
             statement.setString(2, email);
             statement.setString(3, phone);
             statement.setString(4, address);
             statement.executeUpdate();
-            System.out.println("Customer registered successfully!");
+            
+            ResultSet generatedKeys = statement.getGeneratedKeys();
+            int appointmentId = -1;
+            if (generatedKeys.next()) {
+                appointmentId = generatedKeys.getInt(1);
+            }
+
+            if (appointmentId != -1) {
+                System.out.println("Customer registered successfully! Your Customer ID: " + appointmentId);
+            } else {
+                System.out.println("Failed to retrieve appointment ID.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error in register customer: " + e.getMessage());
         }
         System.out.println();
     }
     private static void viewAppointmentHistory(Connection connection, Scanner scanner) throws SQLException {
-
+    	System.out.println("Please Insert Appointment Id for History");
         String sql = "SELECT * FROM appointments WHERE id = ?";
-        int tak = Integer.parseInt(scanner.nextLine());	//String to integer
+        int tak = Integer.parseInt(scanner.nextLine());
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             int id = tak;
             statement.setInt(1, id);
@@ -140,18 +154,30 @@ public class Main {
 
         try {
             String sql = "INSERT INTO appointments (beautician_id, service_id, date, time) VALUES (?, ?, ?, ?)";
-            PreparedStatement statement = connection.prepareStatement(sql);
+            PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, beauticianId);
             statement.setInt(2, serviceId);
             statement.setString(3, date);
             statement.setString(4, time);
             statement.executeUpdate();
-            System.out.println("Appointment booked successfully!");
+
+            ResultSet generatedKeys = statement.getGeneratedKeys();
+            int appointmentId = -1;
+            if (generatedKeys.next()) {
+                appointmentId = generatedKeys.getInt(1);
+            }
+
+            if (appointmentId != -1) {
+                System.out.println("Appointment booked successfully! Your Appointment ID: " + appointmentId);
+            } else {
+                System.out.println("Failed to retrieve appointment ID.");
+            }
         } catch (SQLException e) {
             System.out.println("Error booking appointment: " + e.getMessage());
         }
         System.out.println();
     }
+
 
 
     private static void viewBeauticians(Connection connection, Scanner scanner) {
