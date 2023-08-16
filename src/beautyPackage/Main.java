@@ -45,8 +45,7 @@ public class Main {
             System.out.println("15. Cancel Appointment");
             System.out.println("0. Exit");
             System.out.println("---------------------------------------------------------------------------------------");
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+            int choice = Integer.parseInt(scanner.nextLine());
             switch (choice) {
                 case 1:
                     Main.registerCustomer(connection, scanner);
@@ -145,7 +144,7 @@ public class Main {
     private static void viewAppointmentHistory(Connection connection, Scanner scanner) throws SQLException {
         System.out.println("Enter Booking Appointment");
         String sql = "SELECT * FROM appointments WHERE id = ?";
-        int tak = scanner.nextInt();
+        int tak = Integer.parseInt(scanner.nextLine());
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             int id = tak;
             statement.setInt(1, id);
@@ -165,6 +164,7 @@ public class Main {
                 System.out.println("No appointments found");
             }
         }
+        System.out.println();
     }
 
     private static void bookAppointment(Connection connection, Scanner scanner) {
@@ -227,6 +227,7 @@ public class Main {
         } catch (SQLException e) {
             System.out.println("Error viewing beauticians: " + e.getMessage());
         }
+        System.out.println();
     }
 
     private static void viewServices(Connection connection, Scanner scanner) {
@@ -244,12 +245,12 @@ public class Main {
         } catch (SQLException e) {
             System.out.println("Error viewing services: " + e.getMessage());
         }
+        System.out.println();
     }
 
     private static void modifyAppointment(Connection connection, Scanner scanner) throws SQLException {
         System.out.println("Please enter the id of the appointment you want to modify:");
-        int id = scanner.nextInt();
-        scanner.nextLine(); // Consume newline character
+        int id = Integer.parseInt(scanner.nextLine());
 
         String selectSql = "SELECT * FROM appointments WHERE id = ?";
         String updateSql = "UPDATE appointments SET date = ?, time = ? WHERE id = ?";
@@ -277,27 +278,28 @@ public class Main {
                 System.out.println("Appointment not found");
             }
         }
+        System.out.println();
     }
 
 
     private static void cancelAppointment(Connection connection, Scanner scanner) throws SQLException {
         System.out.println("Enter Appointment ID:");
 
-        int id = scanner.nextInt();
+        int id = Integer.parseInt(scanner.nextLine());
 
         String sql = "DELETE FROM appointments WHERE id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
             statement.executeUpdate();
-            System.out.println("Appointment canceled successfully!");
+            System.out.println("Appointment cancelled successfully!");
         }
+        System.out.println();
     }
 
     private static void modifyCustomer(Connection connection, Scanner scanner) throws SQLException {
         System.out.println("Please enter the ID of the customer you want to modify:");
-        int customerId = scanner.nextInt();
-        scanner.nextLine(); // Consume newline character
+        int customerId = Integer.parseInt(scanner.nextLine());
 
         String selectSql = "SELECT * FROM customers WHERE id = ?";
         String updateSql = "UPDATE customers SET name = ?, email = ?, phone = ?, address = ? WHERE id = ?";
@@ -333,11 +335,12 @@ public class Main {
                 System.out.println("Customer not found");
             }
         }
+        System.out.println();
     }
 
     private static void deleteCustomer(Connection connection, Scanner scanner) throws SQLException {
         System.out.println("Enter Customer ID to delete:");
-        int customerId = scanner.nextInt();
+        int customerId = Integer.parseInt(scanner.nextLine());
 
         String deleteCustomerSql = "DELETE FROM customers WHERE id = ?";
         String deleteAppointmentsSql = "DELETE FROM appointments WHERE id = ?";
@@ -363,8 +366,7 @@ public class Main {
 
     private static void addBeautician(Connection connection, Scanner scanner) throws SQLException {
         System.out.println("Please enter the ID of the beautician:");
-        int id = scanner.nextInt();
-        scanner.nextLine(); // Consume newline character
+        int id = Integer.parseInt(scanner.nextLine());
 
         System.out.println("Please enter the name of the beautician:");
         String name = scanner.nextLine();
@@ -389,7 +391,7 @@ public class Main {
 
     private static void deleteBeautician(Connection connection, Scanner scanner) throws SQLException {
         System.out.println("Please enter the ID of the beautician to delete:");
-        int id = scanner.nextInt();
+        int id = Integer.parseInt(scanner.nextLine());
 
         String deleteSql = "DELETE FROM beauticians WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(deleteSql)) {
@@ -402,12 +404,12 @@ public class Main {
                 System.out.println("Beautician not found or an error occurred.");
             }
         }
+        System.err.println();
     }
 
     private static void modifyBeautician(Connection connection, Scanner scanner) throws SQLException {
         System.out.println("Please enter the ID of the beautician you want to modify:");
-        int id = scanner.nextInt();
-        scanner.nextLine(); // Consume newline character
+        int id = Integer.parseInt(scanner.nextLine());
 
         String selectSql = "SELECT * FROM beauticians WHERE id = ?";
         String updateSql = "UPDATE beauticians SET name = ?, specialization = ? WHERE id = ?";
@@ -435,21 +437,20 @@ public class Main {
                 System.out.println("Beautician not found");
             }
         }
+        System.out.println();
     }
 
     private static void addService(Connection connection, Scanner scanner) throws SQLException {
         System.out.println("Please enter the service details:");
 
         System.out.println("Enter Service ID (manually assigned):");
-        int serviceId = scanner.nextInt();
-        scanner.nextLine(); // Consume newline character
+        int serviceId = Integer.parseInt(scanner.nextLine());
 
         System.out.println("Enter Service Name:");
         String serviceName = scanner.nextLine();
 
         System.out.println("Enter Service Price:");
-        double servicePrice = scanner.nextDouble();
-        scanner.nextLine(); // Consume newline character
+        double servicePrice = Double.parseDouble(scanner.nextLine());
 
         try {
             String sql = "INSERT INTO services (id, name, price) VALUES (?, ?, ?)";
@@ -468,8 +469,7 @@ public class Main {
 
     private static void modifyService(Connection connection, Scanner scanner) throws SQLException {
         System.out.println("Please enter the ID of the service you want to modify:");
-        int serviceId = scanner.nextInt();
-        scanner.nextLine(); // Consume newline character
+        int serviceId = Integer.parseInt(scanner.nextLine());
 
         String selectSql = "SELECT * FROM services WHERE id = ?";
         String updateSql = "UPDATE services SET name = ?, price = ? WHERE id = ?";
@@ -498,11 +498,12 @@ public class Main {
                 System.out.println("Service not found");
             }
         }
+        System.out.println();
     }
 
     private static void deleteService(Connection connection, Scanner scanner) throws SQLException {
         System.out.println("Enter Service ID to delete:");
-        int serviceId = scanner.nextInt();
+        int serviceId = Integer.parseInt(scanner.nextLine());
 
         String deleteSql = "DELETE FROM services WHERE id = ?";
 
@@ -516,5 +517,6 @@ public class Main {
                 System.out.println("Service not found or an error occurred.");
             }
         }
+        System.out.println();
     }
 }
